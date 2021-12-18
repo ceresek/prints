@@ -1,0 +1,9 @@
+.venv
+.sublime
+__pycache__
+
+poetry.lock
+
+*.stl
+*.scad
+*.gcode

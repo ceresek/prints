@@ -1,0 +1,6 @@
+{
+    "reportWildcardImportFromLibrary": false,
+
+    "venvPath": ".",
+    "venv": ".venv"
+}
