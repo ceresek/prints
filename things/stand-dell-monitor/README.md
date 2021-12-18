@@ -1,6 +1,6 @@
 # About
 
-A stand to raise the Dell S3221QS monitor.
+A stand to raise the Dell S3221QS monitor to eye level.
 
 # Printing
 
