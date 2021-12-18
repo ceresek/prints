@@ -10,5 +10,5 @@ around sides. Avoid support in the connecting groove.
 
 # Copying
 
-Model CC-BY ceres@tmatmouci.cz
-Using SolidPython and OpenSCAD
+Model CC-BY ceres@tmatmouci.cz.
+Using SolidPython and OpenSCAD.
