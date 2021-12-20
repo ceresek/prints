@@ -6,4 +6,4 @@ continuously.
 
 # Copying
 
-Repository CC-BY ceres@tmatmouci.cz except where noted otherwise
+Repository CC-BY ceres@tmatmouci.cz except where noted otherwise.
