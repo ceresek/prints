@@ -1,6 +1,6 @@
 # About
 
-An insert for using longer screw with Thule FreeRide root top bike rack.
+An insert for using longer screw with Thule FreeRide roof top bike rack.
 The rack cannot hold bikes with wide frames such as e-bikes. The insert
 makes it possible to replace the T shaped screw with a longer M8 screw
 to hold a slightly wider frame (up to around 10 centimeters).
