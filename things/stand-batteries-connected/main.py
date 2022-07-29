@@ -113,7 +113,7 @@ def do_stand (rows, columns, radius, width, height):
 
     drill = cylinder (radius, STAND_HEIGHT)
     drill = translate ((0, 0, STAND_FLOOR_THICKNESS)) (drill)
-    drill += cylinder (radius * STAND_FLOOR_RATIO)
+    drill += cylinder (radius * STAND_FLOOR_RATIO, STAND_HEIGHT)
     drill = translate ((gap_horizontal + radius, gap_vertical + radius, 0 - OVERLAP)) (drill)
 
     for row in range (rows):
