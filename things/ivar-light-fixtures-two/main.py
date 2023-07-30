@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import math
-import operator
 
 from solid import *
 from solid.utils import *
@@ -185,7 +184,7 @@ def holder_wire ():
     # Construct wire hole.
     bore_helper_shared_x = ivar.STAND_DEPTH + PROFILE_HOLE_OFFSET
     bore_helper_side_y = BODY_THICKNESS + HOLDER_WIRE_SIZE/2
-    bore_helper_turn_y = BODY_THICKNESS + HOLDER_WIRE_SIZE / 2 + PROFILE_HOLE_OFFSET
+    bore_helper_turn_y = BODY_THICKNESS + HOLDER_WIRE_SIZE/2 + PROFILE_HOLE_OFFSET
     bore_helper_hole_y = HOLDER_PIPE_SIZE + PROFILE_OFFSET + PROFILE_SIZE - PROFILE_HOLE_OFFSET
     bore_helper_shared_z = 0 - BODY_THICKNESS - HOLDER_WIRE_SIZE/2
 
