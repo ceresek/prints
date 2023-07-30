@@ -9,7 +9,7 @@ Edit the sources for different dimensions.
 # Printing
 
 Printed with PETG and a lot (8 ?) of perimeters for strength.
-Placed on the side and printed without supports.
+Placed on the side and printed with supports.
 
 # Copying
 
