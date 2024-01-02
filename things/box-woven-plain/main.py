@@ -3,7 +3,6 @@
 import math as _math
 
 from solid import *
-from solid.utils import *
 
 from components.common import *
 
@@ -15,7 +14,7 @@ SEGMENTS = 33
 
 NOZZLE_RADIUS = 0.4 / 2
 
-STICK_RADIUS = 1.111
+STICK_RADIUS = 1.000
 STICK_SQUISH = 0.111
 STICK_SEGMENTS = 6
 STICK_ROTATION = 0
@@ -28,9 +27,19 @@ BOX_FLOOR_THICKNESS = 0.8
 BOX_LOGO_THICKNESS = 0.2
 BOX_LOGO_SCALE = 3
 
-BOX_DEPTH_ROWS = floor (83 / STICK_RADIUS / 2)
-BOX_WIDTH_COLS = floor (150 / COLUMN_SPACING) + 1
-BOX_HEIGHT_COLS = floor (240 / COLUMN_SPACING) + 1
+# Specific Box Dimensions
+
+BOX_SQUARE_DEPTH = 83
+BOX_SQUARE_WIDTH = 150
+BOX_SQUARE_HEIGHT = 150
+
+BOX_MIDDLE_DEPTH = 83
+BOX_MIDDLE_WIDTH = 150
+BOX_MIDDLE_HEIGHT = 180
+
+BOX_RECTANGULAR_DEPTH = 83
+BOX_RECTANGULAR_WIDTH = 150
+BOX_RECTANGULAR_HEIGHT = 240
 
 
 # Utilities
@@ -79,8 +88,8 @@ def wall (num_rows, num_columns):
 
     stick_positions_one = column_positions [:-1]
     stick_positions_two = column_positions [1:]
-    stick_shifts_one = [270, 90] * ceil (num_columns / 2)
-    stick_shifts_two = [90, 270] * ceil (num_columns / 2)
+    stick_shifts_one = [270, 90] * _math.ceil (num_columns / 2)
+    stick_shifts_two = [90, 270] * _math.ceil (num_columns / 2)
     sticks_list = [
         connector (pos_one, shift_one, pos_two, shift_two)
         for (pos_one, shift_one, pos_two, shift_two)
@@ -119,7 +128,7 @@ def corner (num_rows, angle):
 
     support_height = num_rows * STICK_RADIUS * 2
     support_one = cylinder (COLUMN_RADIUS, support_height)
-    support_two = translate (((COLUMN_RADIUS + STICK_RADIUS * STICK_SQUISH + NOZZLE_RADIUS) * sqrt (2) - COLUMN_RADIUS, 0, 0)) (support_one)
+    support_two = translate (((COLUMN_RADIUS + STICK_RADIUS * STICK_SQUISH + NOZZLE_RADIUS) * _math.sqrt (2) - COLUMN_RADIUS, 0, 0)) (support_one)
     support_two = rotate ((0, 0, angle_support)) (support_two)
     support = hull () (support_one, support_two)
 
@@ -127,11 +136,16 @@ def corner (num_rows, angle):
 
 # Box
 
-def box ():
+def box (depth, width, height):
+
+    # Round dimensions to step counts.
+    box_depth_rows = _math.floor (depth / STICK_RADIUS / 2)
+    box_width_cols = _math.floor (width / COLUMN_SPACING) + 1
+    box_height_cols = _math.floor (height / COLUMN_SPACING) + 1
 
     # Rounded corners so no cube here.
-    box_width_centers = (BOX_WIDTH_COLS - 1) * COLUMN_SPACING
-    box_height_centers = (BOX_HEIGHT_COLS - 1) * COLUMN_SPACING
+    box_width_centers = (box_width_cols - 1) * COLUMN_SPACING
+    box_height_centers = (box_height_cols - 1) * COLUMN_SPACING
     floor_column_proto = cylinder (COLUMN_RADIUS, BOX_FLOOR_THICKNESS)
     floor = union () (
         translate ((0, 0, 0)) (floor_column_proto),
@@ -145,23 +159,25 @@ def box ():
     logo = translate ((box_width_centers / 2, box_height_centers / 2, BOX_FLOOR_THICKNESS)) (logo)
 
     # Walls.
-    wall_x_proto = wall (BOX_DEPTH_ROWS, BOX_WIDTH_COLS)
-    wall_y_proto = wall (BOX_DEPTH_ROWS, BOX_HEIGHT_COLS)
+    wall_x_proto = wall (box_depth_rows, box_width_cols)
+    wall_y_proto = wall (box_depth_rows, box_height_cols)
 
     wall_one = translate ((0, 0, BOX_FLOOR_THICKNESS)) (rotate ((0, 0, 0)) (wall_x_proto))
     wall_two = translate ((box_width_centers, 0, BOX_FLOOR_THICKNESS)) (rotate ((0, 0, 90)) (wall_y_proto))
     wall_tre = translate ((box_width_centers, box_height_centers, BOX_FLOOR_THICKNESS)) (rotate ((0, 0, 180)) (wall_x_proto))
     wall_for = translate ((0, box_height_centers, BOX_FLOOR_THICKNESS)) (rotate ((0, 0, 270)) (wall_y_proto))
 
-    # Corners
-    corners_one = translate ((0, 0, BOX_FLOOR_THICKNESS)) (corner (BOX_DEPTH_ROWS, 225))
-    corners_two = translate ((box_width_centers, 0, BOX_FLOOR_THICKNESS)) (corner (BOX_DEPTH_ROWS, 315))
-    corners_tre = translate ((box_width_centers, box_height_centers, BOX_FLOOR_THICKNESS)) (corner (BOX_DEPTH_ROWS, 45))
-    corners_for = translate ((0, box_height_centers, BOX_FLOOR_THICKNESS)) (corner (BOX_DEPTH_ROWS, 135))
+    # Corners.
+    corners_one = translate ((0, 0, BOX_FLOOR_THICKNESS)) (corner (box_depth_rows, 225))
+    corners_two = translate ((box_width_centers, 0, BOX_FLOOR_THICKNESS)) (corner (box_depth_rows, 315))
+    corners_tre = translate ((box_width_centers, box_height_centers, BOX_FLOOR_THICKNESS)) (corner (box_depth_rows, 45))
+    corners_for = translate ((0, box_height_centers, BOX_FLOOR_THICKNESS)) (corner (box_depth_rows, 135))
 
     return floor + logo + wall_one + wall_two + wall_tre + wall_for + corners_one + corners_two + corners_tre + corners_for
 
 
 # Main
 
-scad_render_to_file (box (), 'box.scad', file_header = f'$fn = {SEGMENTS};')
+scad_render_to_file (box (BOX_SQUARE_DEPTH, BOX_SQUARE_WIDTH, BOX_SQUARE_HEIGHT), 'box-square.scad', file_header = f'$fn = {SEGMENTS};')
+scad_render_to_file (box (BOX_MIDDLE_DEPTH, BOX_MIDDLE_WIDTH, BOX_MIDDLE_HEIGHT), 'box-middle.scad', file_header = f'$fn = {SEGMENTS};')
+scad_render_to_file (box (BOX_RECTANGULAR_DEPTH, BOX_RECTANGULAR_WIDTH, BOX_RECTANGULAR_HEIGHT), 'box-rectangular.scad', file_header = f'$fn = {SEGMENTS};')

@@ -5,7 +5,11 @@ Python sources include parametrization.
 
 # Printing
 
-Prototype printed using PLA with variable layer height settings and 0.15 mm base layer height.
+Several earlier prototypes were printed using PLA with variable layer height settings,
+either 0.15 mm or 0.2 mm base layer height, and either 2 or 3 perimeters. The current
+variant should align with 0.2 mm constant layer height instead.
+
+Ignore the print stability warning and do not use supports.
 
 # Copying
 
