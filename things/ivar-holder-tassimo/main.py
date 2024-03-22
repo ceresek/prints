@@ -49,7 +49,7 @@ def hook ():
     return hook
 
 
-def clasp_base ():
+def clasp_base (shelf_height):
 
     catch_slope_cross_height = CATCH_BEND + CATCH_SPACE + CLASP_THICKNESS
 
@@ -65,13 +65,13 @@ def clasp_base ():
             cube (CLASP_THICKNESS + EDGE_EDGE_DISTANCE, CLASP_WIDTH, CLASP_THICKNESS)
                 .left (CLASP_THICKNESS)
                 .down (CLASP_THICKNESS) +
-            cube (CLASP_THICKNESS, CLASP_WIDTH, CLASP_THICKNESS + SHELF_HEIGHT + CATCH_SPACE + CLASP_THICKNESS)
+            cube (CLASP_THICKNESS, CLASP_WIDTH, CLASP_THICKNESS + shelf_height + CATCH_SPACE + CLASP_THICKNESS)
                 .left (CLASP_THICKNESS)
                 .down (CLASP_THICKNESS) +
             cube (catch_slope_real_length, CLASP_WIDTH, CLASP_THICKNESS)
                 .down (CLASP_THICKNESS)
                 .rotate (0, _math.degrees (catch_slope_real_angle), 0)
-                .up (CLASP_THICKNESS + SHELF_HEIGHT + CATCH_SPACE)
+                .up (CLASP_THICKNESS + shelf_height + CATCH_SPACE)
         )
         .back (CLASP_WIDTH / 2)
     )
@@ -88,30 +88,30 @@ def clasp_base ():
     return clasp + hooks
 
 
-def holder_single ():
+def holder_single (shelf_height):
 
     holder = (
-        clasp_base () +
+        clasp_base (shelf_height) +
         cube (CATCH_LENGTH, CLASP_WIDTH, CLASP_THICKNESS)
             .right (CATCH_DISTANCE)
-            .up (SHELF_HEIGHT - CATCH_BEND)
+            .up (shelf_height - CATCH_BEND)
             .back (CLASP_WIDTH/2)
     )
 
     return holder
 
 
-def holder_double ():
+def holder_double (shelf_height):
 
     holder = (
-        clasp_base () +
+        clasp_base (shelf_height) +
         cube (EDGE_EDGE_DISTANCE - CATCH_DISTANCE, CLASP_WIDTH, CLASP_THICKNESS)
             .right (CATCH_DISTANCE)
-            .up (SHELF_HEIGHT - CATCH_BEND)
+            .up (shelf_height - CATCH_BEND)
             .back (CLASP_WIDTH/2) +
         hook ()
             .right (EDGE_EDGE_DISTANCE - HOOK_EDGE_DISTANCE)
-            .up (SHELF_HEIGHT + CLASP_THICKNESS - CATCH_BEND)
+            .up (shelf_height + CLASP_THICKNESS - CATCH_BEND)
     )
 
     return holder
@@ -119,5 +119,5 @@ def holder_double ():
 
 # Main
 
-holder_single ().save_as_scad ('holder_single.scad')
-holder_double ().save_as_scad ('holder_double.scad')
+holder_single (SHELF_HEIGHT).save_as_scad ('holder_single.scad')
+holder_double (SHELF_HEIGHT).save_as_scad ('holder_double.scad')
