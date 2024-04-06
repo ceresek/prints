@@ -121,3 +121,6 @@ def holder_double (shelf_height):
 
 holder_single (SHELF_HEIGHT).save_as_scad ('holder_single.scad')
 holder_double (SHELF_HEIGHT).save_as_scad ('holder_double.scad')
+
+holder_single (15.5).save_as_scad ('holder_single_155.scad')
+holder_single (18.0).save_as_scad ('holder_single_180.scad')

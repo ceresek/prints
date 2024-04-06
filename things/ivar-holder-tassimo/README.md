@@ -4,7 +4,7 @@ A simple clip to hang Tassimo capsule packages on a shelf of the Ikea IVAR syste
 The single sided version is for hanging the packages below a shelf,
 the double sided version is on the photo.
 
-Should fit any shelf with the same height.
+Should fit any shelf with the same height, the height is a parameter in source code.
 
 # Printing
 
