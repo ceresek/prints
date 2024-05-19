@@ -8,6 +8,11 @@ the crumbs.
 
 # Printing
 
+Two versions of the jar are included, one with round holes and one with slits.
+The one with round holes turned out to be too difficult to print on my printer,
+the complex first layer pattern was prone to creating lift off artifacts that
+spoiled the print. The version with slits is easier on the printer.
+
 The prototype was printed in PLA with 0.2 mm layer height, 3 perimeters
 and a fuzzy skin with thickness 0.1 mm starting above the outer thread,
 for a surface that is easier to grasp. The threads on the jar and the
