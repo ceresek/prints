@@ -1,10 +1,23 @@
 import math as _math
 
+
 X = 0
 Y = 1
 Z = 2
 
 OVERLAP = 0.001
+
+ONE_PERIMETER = 0.45
+TWO_PERIMETERS = 0.86
+TRE_PERIMETERS = 1.26
+FOR_PERIMETERS = 1.67
+FIV_PERIMETERS = 2.08
+SIX_PERIMETERS = 2.49
+SVN_PERIMETERS = 2.89
+EIT_PERIMETERS = 3.30
+NIN_PERIMETERS = 3.70
+TEN_PERIMETERS = 4.11
+
 
 def point_to_rotation (point):
     xyz_length = vector_length (point)

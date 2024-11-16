@@ -11,7 +11,7 @@ set_global_fn (111)
 
 OVERLAP = 0.001
 
-CENTER_OUTER_DIAMETER = 13.8
+CENTER_OUTER_DIAMETER = 13.6
 CENTER_INNER_DIAMETER = 11
 CENTER_OUTER_DEPTH = 4
 CENTER_INNER_DEPTH = 6
@@ -68,7 +68,7 @@ def _teeth (inner_radius, outer_radius, depth, edge_angle, count):
     return teeth
 
 
-def _opener ():
+def _opener (center_slack, handle_hole_diameter):
 
     arm = (
         cyl (
@@ -93,29 +93,35 @@ def _opener ():
         .right (ARM_LENGTH)
     )
 
+    if (handle_hole_diameter):
+
+        hole = cyl (d = handle_hole_diameter, h = ARM_THICKNESS + OVERLAP * 2, anchor = TOP).right (ARM_LENGTH).up (OVERLAP)
+
+        arm -= hole
+
     middle = (
         cyl (
-            d = CENTER_INNER_DIAMETER, h = CENTER_INNER_DEPTH - BLADE_THICKNESS,
+            d = CENTER_INNER_DIAMETER - center_slack, h = CENTER_INNER_DEPTH - BLADE_THICKNESS,
             anchor = BOTTOM,
         )
         +
         cyl (
-            d1 = CENTER_INNER_DIAMETER,
-            d2 = CENTER_INNER_DIAMETER - 2 * BLADE_THICKNESS + 2 * EDGE_THICKNESS,
+            d1 = CENTER_INNER_DIAMETER - center_slack,
+            d2 = CENTER_INNER_DIAMETER - center_slack - 2 * BLADE_THICKNESS + 2 * EDGE_THICKNESS,
             h = BLADE_THICKNESS,
             anchor = BOTTOM,
         )
         .up (CENTER_INNER_DEPTH - BLADE_THICKNESS)
         -
         cyl (
-            d = CENTER_INNER_DIAMETER - 2 * BLADE_THICKNESS, h = CENTER_INNER_DEPTH + OVERLAP,
+            d = CENTER_INNER_DIAMETER - center_slack - 2 * BLADE_THICKNESS, h = CENTER_INNER_DEPTH + OVERLAP,
             anchor = BOTTOM,
         )
     )
 
     teeth = _teeth (
-        CENTER_OUTER_DIAMETER / 2,
-        CENTER_OUTER_DIAMETER / 2 + BLADE_THICKNESS,
+        CENTER_OUTER_DIAMETER / 2 + center_slack / 2,
+        CENTER_OUTER_DIAMETER / 2 + center_slack / 2 + BLADE_THICKNESS,
         CENTER_OUTER_DEPTH,
         0 - EDGE_ANGLE,
         EDGE_TEETH,
@@ -135,4 +141,7 @@ def _opener ():
     return arm + middle + teeth + cutter - stripes
 
 
-_opener ().save_as_scad ('opener.scad')
+for gap in range (1,12):
+    _opener (gap/10, 0).save_as_scad (f'opener-gap-{gap}.scad')
+    _opener (gap/10, 8).save_as_scad (f'opener-hole-8-gap-{gap}.scad')
+    _opener (gap/10, 11).save_as_scad (f'opener-hole-11-gap-{gap}.scad')
