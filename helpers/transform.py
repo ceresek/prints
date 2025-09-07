@@ -1,6 +1,7 @@
 import math as _math
 
-from solid import *
+from solid2 import *
+from solid2.extensions.bosl2 import *
 
 from components.common import *
 
@@ -12,8 +13,6 @@ def bend (object, box, radius, segments):
 
     rotation_circumference = 2 * _math.pi * radius
     rotation_step = 360 * segment_step / rotation_circumference
-
-    stretch_factor = _math.tan (_math.radians (rotation_step / 2)) * segment_size [X] / segment_size [Z]
 
     puzzle = []
 
@@ -35,3 +34,16 @@ def bend (object, box, radius, segments):
 
     # Unionize :-)
     return union () (*puzzle)
+
+
+def scale_along_z (object, slice, height, factor):
+
+    steps = _math.ceil (height / slice [Z])
+    tweak = (factor - 1) / steps
+
+    slice_base = cuboid (slice, anchor = BOTTOM)
+    slice_list = [ slice_base.up (slice [Z] * step) for step in range (steps) ]
+    object_list = [ object * slice for slice in slice_list ]
+    scaled_list = [ object.scale ([ 1 + tweak * step, 1 + tweak * step, 1 ]) for step, object in enumerate (object_list) ]
+
+    return union () (*scaled_list)

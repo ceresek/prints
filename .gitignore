@@ -9,3 +9,4 @@ poetry.lock
 *.scad
 *.step
 *.gcode
+*.bgcode

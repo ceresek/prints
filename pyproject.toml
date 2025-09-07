@@ -7,7 +7,7 @@ authors = ['Petr Tuma <ceres@tmatmouci.cz>']
 [tool.poetry.dependencies]
 python = '^3.11'
 solidpython = "^1.1.3"
-solidpython2 = "^2.1.0"
+solidpython2 = "^2.1.2"
 numpy = "^2.1.2"
 
 [tool.poetry.dev-dependencies]
