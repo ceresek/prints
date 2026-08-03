@@ -3,7 +3,7 @@ import math as _math
 from solid2 import *
 from solid2.extensions.bosl2 import *
 
-from components.common import *
+from .constants import *
 
 
 def bend (object, box, radius, segments):

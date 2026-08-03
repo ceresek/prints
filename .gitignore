@@ -2,7 +2,7 @@
 .sublime
 __pycache__
 
-poetry.lock
+uv.lock
 
 *.3mf
 *.stl
