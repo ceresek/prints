@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 24 24"
+   role="img"
+   aria-labelledby="circleOkIconTitle"
+   stroke="#000000"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none"
+   color="#000000"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="original-check.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
+  <title
+     id="circleOkIconTitle">OK</title>
+  <path
+     id="polyline1"
+     style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#000000;stroke:none;stroke-linecap:butt;stroke-linejoin:miter;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1"
+     d="M 12 1.0000195 C 5.9367124 1.0000195 1.0000195 5.9367124 1.0000195 12 C 1.0000195 18.063288 5.9367124 22.99998 12 22.99998 C 18.063288 22.99998 22.99998 18.063288 22.99998 12 C 22.99998 5.9367124 18.063288 1.0000195 12 1.0000195 z M 12 3 C 16.982407 3 21 7.0175926 21 12 C 21 16.982407 16.982407 21 12 21 C 7.0175926 21 3 16.982407 3 12 C 3 7.0175926 7.0175926 3 12 3 z M 16.99998 8.0001562 A 1 1 0 0 0 16.292988 8.2929492 L 10.00002 14.585918 L 7.7070117 12.292969 A 1 1 0 0 0 6.2929688 12.292969 A 1 1 0 0 0 6.2929688 13.707012 L 9.2929688 16.707012 A 1.0001 1.0001 0 0 0 10.707012 16.707012 L 17.707031 9.7070508 A 1 1 0 0 0 17.707031 8.2929492 A 1 1 0 0 0 16.99998 8.0001562 z " />
+</svg>
