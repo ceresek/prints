@@ -26,7 +26,7 @@ class Deltaline:
 
 class Tube (_bd.BasePartObject):
 
-    def __init__ (self, outer_radius: float, inner_radius: float, height: float, align = (_bd.Align.CENTER, _bd.Align.CENTER, _bd.Align.CENTER), mode = _bd.Mode.ADD):
+    def __init__ (self, outer_radius: float, inner_radius: float, height: float, *, align = (_bd.Align.CENTER, _bd.Align.CENTER, _bd.Align.CENTER), mode = _bd.Mode.ADD):
         assert height > 0
         assert inner_radius > 0
         assert outer_radius > inner_radius

@@ -15,6 +15,26 @@ set_global_fn (111)
 OVERLAP = 0.001
 
 
+UNIVERSAL_THICKNESS = FOR_PERIMETERS
+
+UNIVERSAL_INNER_DIAMETER = 45
+UNIVERSAL_OUTER_DIAMETER = UNIVERSAL_INNER_DIAMETER + UNIVERSAL_THICKNESS*2
+UNIVERSAL_NOTCH_OFFSET = 6.666
+UNIVERSAL_NOTCH_HEIGHT = 2
+UNIVERSAL_NOTCH_WIDTH = 7.777
+UNIVERSAL_LENGTH = 35
+
+
+TUBE_THICKNESS = FOR_PERIMETERS
+
+TUBE_OUTER_SMALLER_DIAMETER = 33.8
+TUBE_OUTER_LARGER_DIAMETER = 35.2
+TUBE_INNER_SMALLER_DIAMETER = TUBE_OUTER_SMALLER_DIAMETER - TUBE_THICKNESS*2
+TUBE_INNER_LARGER_DIAMETER = TUBE_OUTER_LARGER_DIAMETER - TUBE_THICKNESS*2
+TUBE_LENGTH = 38
+TUBE_SPLIT = 1/3
+
+
 HOSE_THICKNESS = TRE_PERIMETERS
 
 HOSE_THREAD_DEPTH = 3.3
@@ -62,6 +82,72 @@ NOSE_CUT_GAP = 0.666
 
 NOSE_BODY_RIM = (NOSE_NOTCH_OFFSET - NOSE_NOTCH_DIAMETER/2) / 2
 NOSE_BODY_HEIGHT = NOSE_BUTTON_OFFSET + NOSE_BUTTON_DIAMETER/2 + NOSE_BODY_RIM*2
+
+
+def universal_connector ():
+
+    body = (
+        cyl (
+            h = UNIVERSAL_LENGTH,
+            d = UNIVERSAL_OUTER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        -
+        cyl (
+            h = UNIVERSAL_LENGTH + OVERLAP*2,
+            d = UNIVERSAL_INNER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        .down (OVERLAP)
+    )
+
+    notch = (
+        cuboid (
+            [UNIVERSAL_OUTER_DIAMETER + OVERLAP*2, UNIVERSAL_NOTCH_WIDTH, UNIVERSAL_NOTCH_HEIGHT],
+            anchor = TOP)
+        .up (UNIVERSAL_LENGTH - UNIVERSAL_NOTCH_OFFSET)
+    )
+
+    body -= notch
+
+    return body
+
+
+def tube_connector ():
+
+    body = (
+        cyl (
+            h = TUBE_LENGTH * TUBE_SPLIT,
+            d = TUBE_OUTER_SMALLER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        -
+        cyl (
+            h = TUBE_LENGTH * TUBE_SPLIT + OVERLAP*2,
+            d = TUBE_INNER_SMALLER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        .down (OVERLAP)
+        +
+        cyl (
+            h = TUBE_LENGTH * (1 - TUBE_SPLIT),
+            d1 = TUBE_OUTER_SMALLER_DIAMETER,
+            d2 = TUBE_OUTER_LARGER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        .up (TUBE_LENGTH * TUBE_SPLIT)
+        -
+        cyl (
+            h = TUBE_LENGTH * (1 - TUBE_SPLIT) + OVERLAP*2,
+            d1 = TUBE_INNER_SMALLER_DIAMETER,
+            d2 = TUBE_INNER_LARGER_DIAMETER,
+            anchor = BOTTOM,
+        )
+        .up (TUBE_LENGTH * TUBE_SPLIT)
+        .down (OVERLAP)
+    )
+
+    return body
 
 
 def hose_connector ():
@@ -305,5 +391,44 @@ def combo_hose_nose_lower ():
     return combo
 
 
+def combo_universal_nose ():
+
+    universal = universal_connector ()
+    nose = nose_connector ()
+
+    joint_height = max (UNIVERSAL_OUTER_DIAMETER - NOSE_OUTER_DIAMETER, UNIVERSAL_INNER_DIAMETER - NOSE_INNER_DIAMETER) / 2
+    joint = (
+        cyl (d1 = NOSE_OUTER_DIAMETER, d2 = UNIVERSAL_OUTER_DIAMETER, h = joint_height, anchor = BOTTOM)
+        -
+        cyl (d1 = NOSE_INNER_DIAMETER, d2 = UNIVERSAL_INNER_DIAMETER, h = joint_height + OVERLAP*2, anchor = BOTTOM)
+        .down (OVERLAP)
+    )
+
+    combo = (nose.down (NOSE_BODY_HEIGHT) + joint).down (joint_height) + universal
+
+    return combo
+
+
+def combo_universal_tube ():
+
+    universal = universal_connector ()
+    tube = tube_connector ()
+
+    joint_height = max (UNIVERSAL_OUTER_DIAMETER - TUBE_OUTER_LARGER_DIAMETER, UNIVERSAL_INNER_DIAMETER - TUBE_INNER_LARGER_DIAMETER) / 2
+    joint = (
+        cyl (d1 = TUBE_OUTER_LARGER_DIAMETER, d2 = UNIVERSAL_OUTER_DIAMETER, h = joint_height, anchor = BOTTOM)
+        -
+        cyl (d1 = TUBE_INNER_LARGER_DIAMETER, d2 = UNIVERSAL_INNER_DIAMETER, h = joint_height + OVERLAP*2, anchor = BOTTOM)
+        .down (OVERLAP)
+    )
+
+    combo = (tube.down (TUBE_LENGTH) + joint).down (joint_height) + universal
+
+    return combo
+
+
 combo_hose_nose_upper ().save_as_scad ('hose_nose_upper.scad')
 combo_hose_nose_lower ().save_as_scad ('hose_nose_lower.scad')
+
+combo_universal_nose ().save_as_scad ('universal_nose.scad')
+combo_universal_tube ().save_as_scad ('universal_tube.scad')
